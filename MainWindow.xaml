@@ -1,0 +1,141 @@
+﻿<Window x:Class="AutoWallpaper.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AutoWallpaper"
+        mc:Ignorable="d"
+        Icon="wallpaper.ico" 
+        Closed="Window_Closed"
+        Title="Bing壁纸" Height="525" Width="950" WindowStartupLocation="CenterScreen" 
+        AllowsTransparency="True" WindowStyle="None" MouseMove="Move_MouseMove">
+    <Window.Foreground>
+        <SolidColorBrush Color="#FFF300FF" Opacity="0.35"/>
+    </Window.Foreground>
+    <Window.Resources>
+        <ContextMenu x:Key="ContextMenu">
+            <MenuItem Name="SaveAs_MenuItem" Click="SaveAs_MenuItem_Click" Header="另存为"/>
+            <Separator></Separator>
+            <MenuItem Name="SetWallPaper_MenuItem" Click="SetWallPaper_MenuItem_Click" Header="设为桌面背景"/>
+        </ContextMenu>
+    </Window.Resources>
+    <Grid>
+        <Image x:Name="BingImage" Stretch="Fill" Source="{Binding}" Opacity="0" ContextMenu="{StaticResource ContextMenu}" HorizontalAlignment="Left"  VerticalAlignment="Top" />
+
+        <Canvas Height="60" Margin="10,112,10,147">
+            <TextBlock x:Name="LastTextBlock" TextWrapping="Wrap" Text="《" Height="27" VerticalAlignment="Top" FontSize="22" RenderTransformOrigin="0.515,0.481" Canvas.Left="13" Canvas.Top="16">
+                <TextBlock.Foreground>
+                    <SolidColorBrush Color="#FFF300FF" Opacity="0.2"/>
+                </TextBlock.Foreground>
+            </TextBlock>
+            <Button x:Name="LastButton" Click="LastButton_Click" VerticalAlignment="Top" Height="55" Cursor="Hand" FontSize="22" Foreground="#FFF300FF" Canvas.Left="2" Canvas.Top="3">
+                <Button.OpacityMask>
+                    <SolidColorBrush Color="#FFF300FF" Opacity="0.35"/>
+                </Button.OpacityMask>
+                <Button.BorderBrush>
+                    <SolidColorBrush Color="#FFF300FF" Opacity="0"/>
+                </Button.BorderBrush>
+                <Button.Background>
+                    <SolidColorBrush Color="White" Opacity="0"/>
+                </Button.Background>
+                <Ellipse Height="50" Width="50">
+                    <Ellipse.Stroke>
+                        <SolidColorBrush Color="#FFF300FF" Opacity="0.35"/>
+                    </Ellipse.Stroke>
+                </Ellipse>
+            </Button>
+
+            <TextBlock x:Name="NextTextBlock" Visibility="Hidden" TextWrapping="Wrap" Text="》" Height="27" VerticalAlignment="Top" FontSize="22" Canvas.Right="12" Canvas.Top="16">
+                <TextBlock.Foreground>
+                    <SolidColorBrush Color="#FFF300FF" Opacity="0.2"/>
+                </TextBlock.Foreground>
+            </TextBlock>
+            <Button x:Name="NextButton" Visibility="Hidden" Click="NextButton_Click" VerticalAlignment="Top" Height="55" Cursor="Hand" FontSize="22" Foreground="#FFF300FF" Canvas.Top="3" Canvas.Right="2">
+                <Button.OpacityMask>
+                    <SolidColorBrush Color="#FFF300FF" Opacity="0.35"/>
+                </Button.OpacityMask>
+                <Button.BorderBrush>
+                    <SolidColorBrush Color="#FFF300FF" Opacity="0"/>
+                </Button.BorderBrush>
+                <Button.Background>
+                    <SolidColorBrush Color="White" Opacity="0"/>
+                </Button.Background>
+                <Ellipse Height="50" Width="50">
+                    <Ellipse.Stroke>
+                        <SolidColorBrush Color="#FFF300FF" Opacity="0.35"/>
+                    </Ellipse.Stroke>
+                </Ellipse>
+            </Button>
+        </Canvas>
+        <Canvas Margin="0,0,0,455">
+            <TextBlock x:Name="MinTextBlock" TextWrapping="Wrap" Text="◣" Height="27" VerticalAlignment="Top" FontSize="22" Canvas.Right="195" Canvas.Top="22">
+                <TextBlock.Foreground>
+                    <SolidColorBrush Color="#FFF300FF" Opacity="0.2"/>
+                </TextBlock.Foreground>
+            </TextBlock>
+            <Button x:Name="MinButton" Click="MinButton_Click" VerticalAlignment="Top" Height="55" Cursor="Hand" FontSize="22" Foreground="#FFF300FF" Canvas.Top="7" Canvas.Right="175">
+                <Button.OpacityMask>
+                    <SolidColorBrush Color="#FFF300FF" Opacity="0.35"/>
+                </Button.OpacityMask>
+                <Button.BorderBrush>
+                    <SolidColorBrush Color="#FFF300FF" Opacity="0"/>
+                </Button.BorderBrush>
+                <Button.Background>
+                    <SolidColorBrush Color="White" Opacity="0"/>
+                </Button.Background>
+                <Ellipse Height="50" Width="50">
+                    <Ellipse.Stroke>
+                        <SolidColorBrush Color="#FFF300FF" Opacity="0.35"/>
+                    </Ellipse.Stroke>
+                </Ellipse>
+            </Button>
+
+
+            <TextBlock x:Name="MaxTextBlock" TextWrapping="Wrap" Text="◥" Height="27" VerticalAlignment="Top" FontSize="22" Canvas.Right="115" Canvas.Top="22">
+                <TextBlock.Foreground>
+                    <SolidColorBrush Color="#FFF300FF" Opacity="0.2"/>
+                </TextBlock.Foreground>
+            </TextBlock>
+            <Button x:Name="MaxButton" Click="MaxButton_Click" VerticalAlignment="Top" Height="55" Cursor="Hand" FontSize="22" Foreground="#FFF300FF" Canvas.Top="7" Canvas.Right="95">
+                <Button.OpacityMask>
+                    <SolidColorBrush Color="#FFF300FF" Opacity="0.35"/>
+                </Button.OpacityMask>
+                <Button.BorderBrush>
+                    <SolidColorBrush Color="#FFF300FF" Opacity="0"/>
+                </Button.BorderBrush>
+                <Button.Background>
+                    <SolidColorBrush Color="White" Opacity="0"/>
+                </Button.Background>
+                <Ellipse Height="50" Width="50">
+                    <Ellipse.Stroke>
+                        <SolidColorBrush Color="#FFF300FF" Opacity="0.35"/>
+                    </Ellipse.Stroke>
+                </Ellipse>
+            </Button>
+
+
+            <TextBlock x:Name="ExitTextBlock" TextWrapping="Wrap" Text="╳" Height="27" VerticalAlignment="Top" FontSize="22" Canvas.Right="35" Canvas.Top="22">
+                <TextBlock.Foreground>
+                    <SolidColorBrush Color="#FFF300FF" Opacity="0.2"/>
+                </TextBlock.Foreground>
+            </TextBlock>
+            <Button x:Name="ExitButton" Click="ExitButton_Click" VerticalAlignment="Top" Height="55" Cursor="Hand" FontSize="22" Foreground="#FFF300FF" Canvas.Top="7" Canvas.Right="15">
+                <Button.OpacityMask>
+                    <SolidColorBrush Color="#FFF300FF" Opacity="0.35"/>
+                </Button.OpacityMask>
+                <Button.BorderBrush>
+                    <SolidColorBrush Color="#FFF300FF" Opacity="0"/>
+                </Button.BorderBrush>
+                <Button.Background>
+                    <SolidColorBrush Color="White" Opacity="0"/>
+                </Button.Background>
+                <Ellipse Height="50" Width="50">
+                    <Ellipse.Stroke>
+                        <SolidColorBrush Color="#FFF300FF" Opacity="0.35"/>
+                    </Ellipse.Stroke>
+                </Ellipse>
+            </Button>
+        </Canvas>
+
+    </Grid>
+</Window>
