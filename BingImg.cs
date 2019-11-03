@@ -55,6 +55,7 @@ namespace AutoWallpaper
             try
             {
                 SystemParametersInfo(20, 0, path, 0x01 | 0x02);
+                File.Delete(path);
                 return true;
             }
             catch (Exception)
@@ -77,8 +78,8 @@ namespace AutoWallpaper
             string url = string.Format(api, idx, n);
             var jsonStr = GetHttpData(url);
             JObject jo = (JObject)JsonConvert.DeserializeObject(jsonStr);
-
-            return "https://www.bing.com" + jo["images"][0]["url"].ToString();
+            string urlBase = jo["images"][0]["urlbase"].ToString().Replace("/th?id=", "");
+            return $"https://www.bing.com/th?id={urlBase}_UHD.jpg&rf=LaDigue_UHD.jpg&pid=hp&w=3840&h=2160&rs=1&c=4";
         }
 
         public static string GetHttpData(string uri)
