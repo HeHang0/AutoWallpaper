@@ -337,17 +337,26 @@ namespace AutoWallpaper
 
         private void SetWallPaper_MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            BitmapSource source = BingImage.Source as BitmapSource;
-            if (source == null)
-                return;
+            var filename = BingImage.DataContext as string;
+            if(File.Exists(filename))
+            {
+                BingImg.SetWallpaper(filename);
+            }
+            else
+            {
+                BitmapSource source = BingImage.Source as BitmapSource;
+                if (source == null)
+                    return;
 
-            JpegBitmapEncoder encoder = new JpegBitmapEncoder();
-            encoder.Frames.Add(BitmapFrame.Create(source));
-            var path = Directory.GetCurrentDirectory() + $"\\{DateTime.Now.ToString("yyyy-MM-dd")}.jpg";
-            FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.ReadWrite);
-            encoder.Save(fileStream);
-            fileStream.Close();
-            BingImg.SetWallpaper(path);
+                JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(source));
+                var path = Directory.GetCurrentDirectory() + $"\\{DateTime.Now.ToString("yyyy-MM-dd")}.jpg";
+                FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.ReadWrite);
+                encoder.Save(fileStream);
+                fileStream.Close();
+                BingImg.SetWallpaper(path);
+                File.Delete(path);
+            }
         }
 
         private string GetFileRouteByDialog()
