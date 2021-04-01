@@ -34,9 +34,9 @@ namespace AutoWallpaper
             {
                 file = BingImg.GetImgAndSetWallpaper(this);
             });
+            System.Timers.Timer timer = new System.Timers.Timer();
             if (file == string.Empty)
             {
-                System.Timers.Timer timer = new System.Timers.Timer();
                 timer.Enabled = true;
                 timer.Interval = 60000;//执行间隔时间,单位为毫秒;此时时间间隔为1分钟  
                 timer.Start();
@@ -44,6 +44,8 @@ namespace AutoWallpaper
             }
             else
             {
+
+                timer.Interval = 60000 * 60;
                 BingImage.DataContext = file;
             }
         }
@@ -264,7 +266,7 @@ namespace AutoWallpaper
         private async void LastButton_Click(object sender, RoutedEventArgs e)
         {
             if (taskRunning) return;
-            if (thisPage < 7)
+            if (thisPage < 8)
             {
                 string imageUrl = string.Empty;
                 taskRunning = true;
@@ -277,7 +279,7 @@ namespace AutoWallpaper
                 BingImage.DataContext = imageUrl;
                 NextButton.IsEnabled = true;
             }
-            if (thisPage == 7)
+            if (thisPage >= 7)
             {
                 LastButton.Visibility = Visibility.Hidden;
                 LastTextBlock.Visibility = Visibility.Hidden;
@@ -309,7 +311,7 @@ namespace AutoWallpaper
                 NextButton.Visibility = Visibility.Hidden;
                 NextTextBlock.Visibility = Visibility.Hidden;
             }
-            if (thisPage < 7 && LastButton.Visibility == Visibility.Hidden)
+            if (thisPage < 8 && LastButton.Visibility == Visibility.Hidden)
             {
                 LastButton.Visibility = Visibility.Visible;
                 LastTextBlock.Visibility = Visibility.Visible;
@@ -413,15 +415,11 @@ namespace AutoWallpaper
         private void CheckTime(object sender, ElapsedEventArgs e)
         {
             var timer = sender as System.Timers.Timer;
-            if (IsConnectedInternet() && !IsSetWallpaper)
+            if (IsConnectedInternet())
             {
-                file = BingImg.GetImgAndSetWallpaper(this);
-
-                if (file != string.Empty)
-                {
-                    timer.Stop();
-                    timer.Dispose();
-                }                
+                Random rd = new Random(1);
+                var index = rd.Next(0, 8);
+                file = BingImg.GetImgAndSetWallpaper(this, index);            
             }
         }
 

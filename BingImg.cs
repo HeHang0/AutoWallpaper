@@ -19,18 +19,18 @@ namespace AutoWallpaper
         [DllImport("user32.dll")]
         private static extern bool SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
 
-        public static string GetImgAndSetWallpaper(MainWindow win)
+        public static string GetImgAndSetWallpaper(MainWindow win, int index=0)
         {
             try
             {
-                var ImgUrl = GetBingImageUrl();
+                var ImgUrl = GetBingImageUrl(index);
                 var FileRoute = DownLoadImage(ImgUrl);
                 if (SetWallpaper(FileRoute))
                 {
                     win.IsSetWallpaper = true;
                 }
 
-                return ImgUrl;
+                return FileRoute;
             }
             catch (Exception)
             {
