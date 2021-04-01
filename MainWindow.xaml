@@ -20,7 +20,7 @@
         </ContextMenu>
     </Window.Resources>
     <Grid>
-        <Image x:Name="BingImage" Stretch="Fill" Source="{Binding}" Opacity="0" ContextMenu="{StaticResource ContextMenu}" HorizontalAlignment="Left"  VerticalAlignment="Top" />
+        <Image x:Name="BingImage" Stretch="Fill" Source="{Binding}" ContextMenu="{StaticResource ContextMenu}" HorizontalAlignment="Left"  VerticalAlignment="Top" />
 
         <Canvas Height="60" Margin="10,112,10,147">
             <TextBlock x:Name="LastTextBlock" TextWrapping="Wrap" Text="《" Height="27" VerticalAlignment="Top" FontSize="22" RenderTransformOrigin="0.515,0.481" Canvas.Left="13" Canvas.Top="16">

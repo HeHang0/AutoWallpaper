@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Timers;
+using System.Threading.Tasks;
 
 namespace AutoWallpaper
 {
@@ -23,25 +24,17 @@ namespace AutoWallpaper
         {
             InitializeComponent();
             Hide();
-            icon();
+            SetNotifyIcon();
+            InitWallpaper();
+        }
 
-            if (IsConnectedInternet())
+        private async void InitWallpaper()
+        {
+            await Task.Run(() =>
             {
                 file = BingImg.GetImgAndSetWallpaper(this);
-                if (file == string.Empty)
-                {
-                    System.Timers.Timer timer = new System.Timers.Timer();
-                    timer.Enabled = true;
-                    timer.Interval = 60000;//执行间隔时间,单位为毫秒;此时时间间隔为1分钟  
-                    timer.Start();
-                    timer.Elapsed += new ElapsedEventHandler(CheckTime);
-                }
-                else
-                {
-                    BingImage.DataContext = file;
-                }
-            }
-            else
+            });
+            if (file == string.Empty)
             {
                 System.Timers.Timer timer = new System.Timers.Timer();
                 timer.Enabled = true;
@@ -49,9 +42,13 @@ namespace AutoWallpaper
                 timer.Start();
                 timer.Elapsed += new ElapsedEventHandler(CheckTime);
             }
+            else
+            {
+                BingImage.DataContext = file;
+            }
         }
 
-        private void icon()
+        private void SetNotifyIcon()
         {
             notifyIcon = new NotifyIcon();
             notifyIcon.Text = "Bing壁纸自动更换";//最小化到托盘时，鼠标点击时显示的文本
@@ -263,11 +260,21 @@ namespace AutoWallpaper
         }
 
         private static int thisPage = 0;
-        private void LastButton_Click(object sender, RoutedEventArgs e)
+        private bool taskRunning = false;
+        private async void LastButton_Click(object sender, RoutedEventArgs e)
         {
+            if (taskRunning) return;
             if (thisPage < 7)
             {
-                BingImage.DataContext = BingImg.GetBingImageUrl(++thisPage);
+                string imageUrl = string.Empty;
+                taskRunning = true;
+                await Task.Run(() =>
+                {
+                    imageUrl = BingImg.GetBingImageUrl(++thisPage);
+                    imageUrl = BingImg.DownLoadImage(imageUrl);
+                    taskRunning = false;
+                });
+                BingImage.DataContext = imageUrl;
                 NextButton.IsEnabled = true;
             }
             if (thisPage == 7)
@@ -282,11 +289,20 @@ namespace AutoWallpaper
             }
         }
 
-        private void NextButton_Click(object sender, RoutedEventArgs e)
+        private async void NextButton_Click(object sender, RoutedEventArgs e)
         {
+            if (taskRunning) return;
             if (thisPage > 0)
             {
-                BingImage.DataContext = BingImg.GetBingImageUrl(--thisPage);
+                string imageUrl = string.Empty;
+                taskRunning = true;
+                await Task.Run(() =>
+                {
+                    imageUrl = BingImg.GetBingImageUrl(--thisPage);
+                    imageUrl = BingImg.DownLoadImage(imageUrl);
+                    taskRunning = false;
+                });
+                BingImage.DataContext = imageUrl;
             }
             if (thisPage == 0)
             {
